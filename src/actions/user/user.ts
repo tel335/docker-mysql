@@ -1,21 +1,20 @@
-import { User } from "./user.model.interface"
+import { UserModel } from "../../model/UserModel"
+import { AppDataSource } from "../../database/index"
 
-let users:User[] = []
+const userRepository = AppDataSource.getRepository(UserModel)
 
-export const getUsers = (): User[] => {
-    return users
+export const getUsers = async (): Promise<UserModel[]> => {
+    return await userRepository.find()
 }
 
-export const addUser = (userData: any): void => {
+export const addUser = async (userData: any) => {
     const user = {
         name: userData.name,
         rol: userData.rol
     }
-    users.push(user)
+    await userRepository.save(user)
 }
 
-export const removeUserAction = (userRol: string): void => {
-    users = users.filter((user) => {  
-        return user.rol !== userRol
-    })
+export const removeUserAction = async (userRol: string) => {
+    await userRepository.delete({ rol: userRol })  // DELETE FROM user_model WHERE rol = userRol;
 }

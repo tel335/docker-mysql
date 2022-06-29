@@ -1,0 +1,15 @@
+version: '3.3'
+services:
+  db:
+    container_name: tel335_mysql_container
+    image: mysql:5.7
+    environment:
+      MYSQL_DATABASE: test
+      MYSQL_USER: test
+      MYSQL_PASSWORD: test
+      MYSQL_ROOT_PASSWORD: test
+    ports:
+      - 3306:3306
+    volumes:
+      - ../mysql_data:/var/lib/mysql
+    network_mode: bridge
